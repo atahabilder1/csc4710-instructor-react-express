@@ -114,6 +114,73 @@ app.get('/listall', (req, res) => {
 
 ## 🚀 Getting Started
 
+### 🚀 Step 1: Install Node.js
+
+Please follow the steps below to set up your development environment:
+
+#### ✅ 1. Install Node.js 20.xxx (includes npm)
+- Go to the official website:  
+  👉 [https://nodejs.org/dist/v20.19.3/node-v20.19.3-x64.msi](https://nodejs.org/dist/v20.19.3/node-v20.19.3-x64.msi)
+- Download the **LTS version (recommended)** for your operating system.
+- Run the installer and complete the setup.
+
+> Note: **npm (Node Package Manager)** is automatically installed with Node.js.
+
+---
+
+#### ✅ 2. Verify the installation
+
+Open your terminal (Command Prompt, PowerShell, or Terminal) and run:
+
+```bash
+node -v
+```
+
+This should print something like:
+
+```
+v20.10.0
+```
+
+Then run:
+
+```bash
+npm -v
+```
+
+You should see something like:
+
+```
+10.2.1
+```
+
+If both versions show correctly, you're all set! ✅
+
+
+Create a database named test. Create a table called students in the test database as follows:
+```sql
+-- Create the database
+CREATE DATABASE test;
+
+-- Use the database
+USE test;
+
+-- Create the students table
+CREATE TABLE students (
+    id SMALLINT,
+    name VARCHAR(100),
+    birthday DATE,
+    gpa FLOAT
+);
+
+-- Insert records into students
+INSERT INTO students VALUE (1, "peter", '1988-08-22', 3.1);
+INSERT INTO students VALUE (2, "kathy", '1997-08-12', 3.2);
+INSERT INTO students VALUE (3, "mike", '1999-08-02', 3.3);
+INSERT INTO students VALUE (4, "john", '1998-06-13', 3.7);
+```
+###  Install tools
+
 ### 1️⃣ Clone the Repository
 
 ```bash
