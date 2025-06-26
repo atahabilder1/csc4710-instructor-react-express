@@ -1,58 +1,156 @@
-In this project, you will create a simple Web-based app using mysql, nodejs and react.
 
-**Exercise description**
-1. Watch video: https://www.youtube.com/watch?v=Q3ixb1w-QaY
-2. Run the sample code according to the video and the instructions given below.
-3. Install nodejs and npm, and packages including express, mysql, cors, and nodemon.
-4. Change the frontend code (index.html, main.jsx, and App.jsx) and the backend code (server.js) from the sample code to display the results of running 10 SELECT statements, each of them should select from at least TWO tables and its where clause has at least two conditions.  
+# CSC4710 Instructor Full Stack Project
 
-     Example 1: ```SELECT crscode FROM Students, Transcript WHERE students.id = Transcript.studentid AND transcipt.semester = 'Fall2007'```
-     Exmaple 2: ```SELECT People.name FROM People, Hobbies WHERE People.id = Hobbies.peopleid and Hobbies.hobby = 'swimming' ```
+A full stack web application designed for teaching and demonstration purposes in **CSC4710 (Database Systems)**. This project consists of a **React.js frontend** and an **Express.js + MySQL backend**. It showcases how to build and connect a dynamic user interface with a database-powered API.
 
-5. The code should be running to deserve full credits. Submit all SQL statements in a file called sql.txt. 
+GitHub Repo: [https://github.com/atahabilder1/csc4710-instructor-react-express](https://github.com/atahabilder1/csc4710-instructor-react-express)
 
-Note: grading is based on your fluency of SQL, the success execution result of server.js showing on the web browser and your explanation skill of the result. 
+---
 
----------------------------------------------------------------------------------------------------------
+## 📌 Project Description
 
-**How to run the given sample code**
+This application serves as a **student records system**, where instructors or users can:
 
-To get the sample project working: 
-1. In your file system, create a directory called ```reactmysql``` as your project directory. 
-2. Under ```reactmysql```, create directory ```Backend```. 
-3. Copy the files under Backend (under https://github.com/shiyonglu/database_javascript/tree/main/exercise3) to Backend.
-4. Create a table called students in the ``test`` database as follows:
+- View all student records
+- Fetch individual student details by ID
+- Learn how frontend components interact with backend routes
+- Understand full stack CRUD operations (read-only for now)
 
-```SQL
-CREATE TABLE students (id SMALLINT, name VARCHAR(100), birthday DATE, gpa FLOAT);
+The backend provides **RESTful API endpoints** built with **Express**, which interacts with a **MySQL database**. The frontend, developed with **React** and powered by **Vite**, consumes these APIs and displays dynamic data.
 
-INSERT INTO students VALUE (1, "peter", '1988-08-22', 3.1);
+---
 
-INSERT INTO students VALUE (2, "kathy", '1997-08-12', 3.2);
+## ✨ Features
 
-INSERT INTO students VALUE (3, "mike", '1999-08-02', 3.3);
+- Express-based backend with REST endpoints
+- MySQL database for persistent data
+- React + Vite frontend for interactive UI
+- CORS-enabled API access
+- Clean project structure for teaching modular development
 
-INSERT INTO students VALUE (4, "john", '1998-06-13', 3.7);
+---
 
+## 🧰 Installation Tools and Their Purpose
+
+| Tool         | Used In    | Purpose |
+|--------------|------------|---------|
+| `Node.js`    | Both       | Runtime for JavaScript on backend; required for npm scripts |
+| `npm`        | Both       | Node package manager used to install dependencies |
+| `nodemon`    | Backend    | Automatically restarts the server when file changes are detected |
+| `express`    | Backend    | Web framework for building the REST API |
+| `mysql`      | Backend    | Allows Node.js to connect to a MySQL database |
+| `cors`       | Backend    | Enables cross-origin requests from frontend |
+| `vite`       | Frontend   | Fast frontend build tool for React |
+| `react`      | Frontend   | Builds the user interface |
+| `react-dom`  | Frontend   | Renders React components to the DOM |
+
+---
+
+⚠️ **Note:** This project requires **Node.js version 20** or higher. Please ensure you have it installed before running the steps below.
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/atahabilder1/csc4710-instructor-react-express.git
+cd csc4710-instructor-react-express
 ```
 
-5. cd Backend
-6. npm init -y
-7. npm install express mysql cors nodemon
-8. Modify the scripts section of the Backend/package.json as follows:
+---
 
-```javascript
- "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
-  },
+### 2️⃣ Backend Setup (`/Backend`)
+
+```bash
+cd Backend
+npm install
 ```
-9. Start the backend: 1) ```cd Backend```, and run ```npm start```.
-10. Now you can access the Backend endoints directly. For example, you can point your brower to [http://localhost:8081](http://localhost:8081) and [http://localhost:8081/listall](http://localhost:8081/listall). The later should show the content of the students table in JSON format.
-12. At the project home directory, run ```npm create vite@latest```, type ```Frontend``` as the project name, and choose ```react``` and ```javascript```.
-14. Replace the App.jsx file under Frontend/src by the one under https://github.com/shiyonglu/database_javascript/tree/main/exercise3/Frontend. Open a new terminal to run the following commands.
-15. cd Frontend
-16. Run ```npm install```
-17. Run ```npm run dev``` and then point your browser to ```http://localhost:5173/``` which should show the page that displays the query result of the students table. 
 
+🛠 This installs:
+- Express
+- MySQL
+- Cors
+- Nodemon
 
+🔌 Then configure your `mysql.createConnection()` in `server.js` to match your local DB setup.
+
+#### Run the Backend Server:
+
+```bash
+npm start
+```
+
+The server will run at: [http://localhost:8081](http://localhost:8081)
+
+---
+
+### 3️⃣ Frontend Setup (`/Frontend`)
+
+```bash
+cd ../Frontend
+npm install
+```
+
+🛠 This installs:
+- React
+- Vite
+- React DOM
+
+#### Run the Frontend App:
+
+```bash
+npm run dev
+```
+
+The frontend will run at: [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 🔗 API Endpoints
+
+| Endpoint        | Method | Description                |
+|-----------------|--------|----------------------------|
+| `/`             | GET    | Welcome message            |
+| `/listall`      | GET    | List all students          |
+| `/student/:id`  | GET    | Get a student by ID        |
+
+---
+
+## 📂 Folder Structure
+
+```
+csc4710-instructor-react-express/
+│
+├── Backend/
+│   ├── server.js
+│   ├── package.json
+│
+├── Frontend/
+│   ├── src/
+│   ├── index.html
+│   ├── package.json
+│
+└── README.md
+```
+
+---
+
+## 👨‍🏫 Designed For
+
+This project is intended for **the students** in computer science or software engineering programs who want to:
+
+- Understand the interaction between frontend and backend
+- Learn how databases integrate with REST APIs
+- Practice full stack web development with modern tools
+
+---
+
+## 📜 License
+
+This project is open-source for educational use under the [MIT License](LICENSE).
+
+---
+
+## 🙋‍♂️ Need Help?
+
+If you're stuck or want to extend this project (e.g., add Create/Update/Delete, or auth), feel free to fork, open an issue, or reach out.
