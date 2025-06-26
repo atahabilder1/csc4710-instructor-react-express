@@ -20,6 +20,70 @@ The backend provides **RESTful API endpoints** built with **Express**, which int
 
 ---
 
+## 🧠 How the Components Interact
+
+This project highlights the flow of data from the frontend (React) to the backend (Express) and into the MySQL database.
+
+### 🔁 Component Communication Flow:
+
+```
+User → React Component → HTTP Request → Express API → MySQL → Response → React UI
+```
+
+### 💡 Example Breakdown
+
+
+#### 1. React (Frontend)
+```jsx
+useEffect(() => {
+  fetch('http://localhost:8081/listall')
+    .then(res => res.json())
+    .then(data => setData(data));
+}, []);
+```
+- Sends a **GET** request to the backend endpoint `/listall`.
+- Once the data is received, it's in **JSON format**.
+- This JSON is then saved into React's state using `setData(data)`.
+
+#### 2. Express (Backend)
+```js
+app.get('/listall', (req, res) => {
+  db.query("SELECT * FROM students", (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+```
+- Receives the request from React.
+- Executes the SQL query `SELECT * FROM students`.
+- Converts the database result into JSON and sends it back to the frontend.
+
+#### 3. MySQL (Database)
+- Holds the actual student records.
+- The query result from MySQL is structured into rows of data, such as:
+```json
+[
+  { "id": 1, "name": "Ali", "birthday": "2000-01-01", "gpa": 3.9 },
+  { "id": 2, "name": "Sara", "birthday": "1999-06-15", "gpa": 3.7 }
+]
+```
+
+#### 4. React Rendering
+- The frontend maps over the JSON array using `.map()`:
+```jsx
+{data.map((d, i) => (
+  <tr key={i}>
+    <td>{d.id}</td>
+    <td>{d.name}</td>
+    <td>{new Date(d.birthday).toLocaleDateString()}</td>
+    <td>{d.gpa}</td>
+  </tr>
+))}
+```
+- Each student object becomes one row in the HTML table.
+
+---
+
 ## ✨ Features
 
 - Express-based backend with REST endpoints
@@ -132,6 +196,64 @@ csc4710-instructor-react-express/
 │
 └── README.md
 ```
+
+---
+### Specific file location guidance for implementing each CRUD endpoint and its frontend/backend/database responsibilities
+
+ 
+
+## 🗂️ Where to Add CRUD Code: File-by-File Breakdown
+
+Here’s a clear guide on **what file to modify** and **what needs to be done** to implement each CRUD operation:
+
+---
+
+### 🔧 1. Create (Add New Student)
+
+| Layer     | File                | What to Do |
+|-----------|---------------------|------------|
+| Database  | `students` table    | Ensure the table has columns: `id`, `name`, `birthday`, `gpa` |
+| Backend   | `Backend/server.js` | Add a POST route `/student` to insert into the database |
+| Frontend  | `Frontend/src/App.jsx` or separate form component | Add a form to collect student data and `fetch()` to POST it |
+
+---
+
+### 📝 2. Read (Get All / Get by ID)
+
+✔️ Already Implemented
+
+| Layer     | File                | What It Does |
+|-----------|---------------------|--------------|
+| Backend   | `Backend/server.js` | Routes: `/listall`, `/student/:id` |
+| Frontend  | `Frontend/src/App.jsx` | Uses `useEffect()` and `fetch()` to get data and display in table |
+| Database  | `students` table    | Must contain test data for display |
+
+---
+
+### ✏️ 3. Update (Edit Student)
+
+| Layer     | File                | What to Do |
+|-----------|---------------------|------------|
+| Database  | `students` table    | Make sure existing student entries exist for update |
+| Backend   | `Backend/server.js` | Add a PUT route `/student/:id` that updates fields by ID |
+| Frontend  | `Frontend/src/App.jsx` or `EditStudent.jsx` | Add edit form and send PUT request using `fetch()` |
+
+---
+
+### ❌ 4. Delete (Remove Student)
+
+| Layer     | File                | What to Do |
+|-----------|---------------------|------------|
+| Backend   | `Backend/server.js` | Add a DELETE route `/student/:id` that removes a student |
+| Frontend  | `Frontend/src/App.jsx` | Add delete button next to each student and call DELETE using `fetch()` |
+| Database  | `students` table    | Deletion will affect rows permanently unless soft-delete is implemented |
+
+---
+
+✅ Also, don't forget:
+- Use `express.json()` in `server.js` to handle POST and PUT JSON requests:
+  ```js
+  app.use(express.json());
 
 ---
 
