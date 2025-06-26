@@ -1,1 +1,24 @@
+# Node modules (frontend + backend)
 **/node_modules/
+
+# Logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# Dependency lock files (optional if you want clean clones)
+**/package-lock.json
+
+# Build output (Vite/React builds)
+**/dist/
+**/build/
+
+# OS/IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+
+# Environment files
+**/.env
+.env.*
