@@ -20,7 +20,6 @@ BookNest is a full-stack inventory management system built as a group project fo
 
 ## Folder Structure
 
-```
 booknest/
 ├── Backend/
 │ ├── server.js
@@ -35,9 +34,7 @@ booknest/
 │ │ │ └── SearchBar.jsx
 │ │ ├── App.jsx
 │ ├── index.html
-```
-```
+
 Video Demonstration: [Insert Google Drive or YouTube Link Here]
 Team Members: Fabian Sedlmayr, Hashir Ahmad
 Contribution Report: See ContributionReport.pdf for breakdown of responsibilities
-```
