@@ -35,6 +35,7 @@ booknest/
 │ │ │ └── SearchBar.jsx
 │ │ ├── App.jsx
 │ ├── index.html
+```
 
 Video Demonstration: [Insert Google Drive or YouTube Link Here]
 Team Members: Fabian Sedlmayr, Hashir Ahmad
