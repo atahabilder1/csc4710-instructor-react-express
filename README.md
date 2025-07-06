@@ -37,48 +37,6 @@ booknest/
 │ ├── index.html
 ```
 
-## Setup Instructions
-
-### Backend Setup
-
-1. Navigate to the `Backend` folder:
-
-   ```bash
-   cd Backend
-   npm install
-Configure your MySQL database connection in db.js.
-Set up your MySQL database:
-CREATE DATABASE booknest;
-USE booknest;
-
-CREATE TABLE books (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(255),
-  isbn VARCHAR(20),
-  price DECIMAL(6,2),
-  publication_year INT,
-  stock INT
-);
-Start the backend server:
-node server.js
-The server will run at: http://localhost:3001
-Frontend Setup
-Navigate to the Frontend folder:
-cd ../Frontend
-npm install
-Start the React development server:
-npm run dev
-The frontend will run at: http://localhost:5173
-API Endpoints
-
-Method	Endpoint	Description
-GET	/books	List all books
-GET	/books/search/:title	Search books by title
-POST	/books	Add a new book
-PUT	/books/:id	Edit a book by ID
-DELETE	/books/:id	Delete a book by ID
-Team Members and Demo
-
 Video Demonstration: [Insert Google Drive or YouTube Link Here]
 Team Members: Fabian Sedlmayr, Hashir Ahmad
 Contribution Report: See ContributionReport.pdf for breakdown of responsibilities
