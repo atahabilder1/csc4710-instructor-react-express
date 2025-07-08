@@ -1,6 +1,7 @@
 // ==============================
 // 📦 Imports and Middleware Setup
 // ==============================
+const bcrypt = require('bcrypt');             // encrypt pass
 
 const express = require('express');           // Web framework for handling HTTP requests
 const mysql = require('mysql');               // MySQL database connection for Node.js
@@ -55,6 +56,119 @@ app.get('/listall', (req, res) => {
     return res.json(data);
   });
 });
+
+
+
+
+
+// ==============================
+// 👤 Endpoint: POST /register
+// 👉 Triggered when: User submits "Register" form in frontend
+// 📝 Request Body: { name, email, password, birthday, gpa }
+// 🔒 Backend Logic: Hash password and store user in students table
+// 📤 Response: Success or error message
+// ==============================
+
+app.post('/register', async (req, res) => {
+  const { name, email, password, birthday, gpa } = req.body;
+
+  // 🚫 Check for missing required fields
+  if (!name || !email || !password || !birthday || gpa === undefined) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+
+  try {
+    // 🔐 Hash the password with bcrypt (10 salt rounds)
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 🧾 Insert new student into the database
+    const sql = `INSERT INTO students (name, email, password, birthday, gpa) VALUES (?, ?, ?, ?, ?)`;
+    db.query(sql, [name, email, hashedPassword, birthday, gpa], (err, result) => {
+      if (err) {
+        if (err.code === 'ER_DUP_ENTRY') {
+          return res.status(409).json({ message: "Email already exists" });
+        }
+        return res.status(500).json(err);
+      }
+
+      // ✅ Registration successful
+      res.status(201).json({ message: "Registration successful", studentId: result.insertId });
+    });
+  } catch (err) {
+    console.error("Hashing error:", err);
+    res.status(500).json({ message: "Server error during registration." });
+  }
+});
+
+
+
+
+// ==============================
+// 🔐 Endpoint: POST /login
+// 👉 Triggered when: User submits "Login" form in frontend
+// 📝 Request Body: { email, password }
+// 🔍 Backend Logic: Verify password with bcrypt
+// 📤 Response: Success with student info or failure message
+// ==============================
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  // 🔎 Check if the email exists in the database
+  const sql = "SELECT * FROM students WHERE email = ?";
+  db.query(sql, [email], async (err, results) => {
+    if (err) return res.status(500).json(err);
+
+    if (results.length === 0) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const student = results[0];
+
+    try {
+      // ✅ Compare submitted password with hashed password in DB
+      const isMatch = await bcrypt.compare(password, student.password);
+
+      if (!isMatch) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      // 🧾 Successful login: return student profile info (except password)
+      res.status(200).json({
+        message: "Login successful",
+        user: {
+          id: student.id,
+          name: student.name,
+          email: student.email,
+          birthday: student.birthday,
+          gpa: student.gpa
+        }
+      });
+    } catch (err) {
+      console.error("Comparison error:", err);
+      res.status(500).json({ message: "Server error during login." });
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ==============================
 // 📥 Endpoint: GET /student/:id
