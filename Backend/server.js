@@ -1,3 +1,4 @@
+
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
@@ -17,13 +18,12 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    console.error('Database connection failed: ' + err.stack);
+    console.error('❌ DB connection failed: ' + err.stack);
     return;
   }
-  console.log('Connected to the database.');
+  console.log('✅ Connected to DB');
 });
 
-// Welcome route
 app.get('/', (req, res) => {
   return res.json("Welcome to the BookNest API.");
 });
@@ -103,5 +103,5 @@ app.delete('/books/:id', (req, res) => {
 });
 
 app.listen(8081, () => {
-  console.log("I am listening on port 8081.");
+  console.log("🚀 Server listening on port 8081");
 });
