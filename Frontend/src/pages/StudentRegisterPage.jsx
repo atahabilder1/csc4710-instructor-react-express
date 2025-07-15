@@ -27,6 +27,7 @@ function StudentRegisterPage() {
 
   // 🚀 Submit form data to backend
   const handleRegister = (e) => {
+    console.log("handleRegister has been called")
     e.preventDefault(); // ❌ Prevent default form reload
 
     // 📡 Send POST request to backend

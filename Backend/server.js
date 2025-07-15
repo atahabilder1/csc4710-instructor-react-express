@@ -69,12 +69,15 @@ app.get('/', (req, res) => {
 // ==============================
 app.post('/register', async (req, res) => {
   const { name, email, password, birthday, gpa } = req.body;
+  console.log(name, email, password, birthday,gpa);
   if (!name || !email || !password || !birthday || gpa === undefined) {
     return res.status(400).json({ message: "All fields are required." });
   }
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const sql = `INSERT INTO students (name, email, password, birthday, gpa) VALUES (?, ?, ?, ?, ?)`;
+    console.log("🧪 SQL with values:", mysql.format(sql, [name, email, hashedPassword, birthday, gpa]));
+
     db.query(sql, [name, email, hashedPassword, birthday, gpa], (err, result) => {
       if (err) {
         if (err.code === 'ER_DUP_ENTRY') {
